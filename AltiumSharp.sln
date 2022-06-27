@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.452
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltiumSharp", "AltiumSharp\AltiumSharp.csproj", "{56CE96A8-5463-44DA-89C6-7F30C37BC946}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryViewer", "LibraryViewer\LibraryViewer.csproj", "{42247288-AFC2-4590-80CA-702468B40CE4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KiCadFootprintMapper", "KiCadFootprintMapper\KiCadFootprintMapper.csproj", "{94406108-9844-468D-B879-0436FF6A4552}"
+	ProjectSection(ProjectDependencies) = postProject
+		{56CE96A8-5463-44DA-89C6-7F30C37BC946} = {56CE96A8-5463-44DA-89C6-7F30C37BC946}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,10 @@ Global
 		{42247288-AFC2-4590-80CA-702468B40CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42247288-AFC2-4590-80CA-702468B40CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42247288-AFC2-4590-80CA-702468B40CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94406108-9844-468D-B879-0436FF6A4552}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94406108-9844-468D-B879-0436FF6A4552}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94406108-9844-468D-B879-0436FF6A4552}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94406108-9844-468D-B879-0436FF6A4552}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
