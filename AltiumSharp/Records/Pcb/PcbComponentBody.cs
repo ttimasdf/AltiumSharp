@@ -23,6 +23,7 @@ namespace AltiumSharp.Records
         public int BodyProjection { get; set; }
         public Color BodyColor3D { get; set; }
         public double BodyOpacity3D { get; set; }
+        public bool BodyOverrideColor { get; set; }
         public string Identifier { get; set; }
         public string Texture { get; set; }
         public CoordPoint TextureCenter { get; set; }
@@ -68,18 +69,18 @@ namespace AltiumSharp.Records
             Kind = p["KIND"].AsIntOrDefault();
             SubPolyIndex = p["SUBPOLYINDEX"].AsIntOrDefault();
             UnionIndex = p["UNIONINDEX"].AsIntOrDefault();
-            ArcResolution = p["ARCRESOLUTION"].AsCoord();
             IsShapeBased = p["ISSHAPEBASED"].AsBool();
-            StandOffHeight = p["STANDOFFHEIGHT"].AsCoord();
-            OverallHeight = p["OVERALLHEIGHT"].AsCoord();
+            StandOffHeight = p["STANDOFFHEIGHT"].AsCoordOrDefault();
+            OverallHeight = p["OVERALLHEIGHT"].AsCoordOrDefault();
             BodyProjection = p["BODYPROJECTION"].AsIntOrDefault();
             ArcResolution = p["ARCRESOLUTION"].AsCoord();
             BodyColor3D = p["BODYCOLOR3D"].AsColorOrDefault();
             BodyOpacity3D = p["BODYOPACITY3D"].AsDoubleOrDefault();
+            BodyOverrideColor = p["BODYOVERRIDECOLOR"].AsBool();
             Identifier = new string(p["IDENTIFIER"].AsIntList(',').Select(v => (char)v).ToArray());
             Texture = p["TEXTURE"].AsStringOrDefault();
-            TextureCenter = new CoordPoint(p["TEXTURECENTERX"].AsCoord(), p["TEXTURECENTERY"].AsCoord());
-            TextureSize = new CoordPoint(p["TEXTURESIZEX"].AsCoord(), p["TEXTURESIZEY"].AsCoord());
+            TextureCenter = new CoordPoint(p["TEXTURECENTERX"].AsCoordOrDefault(), p["TEXTURECENTERY"].AsCoordOrDefault());
+            TextureSize = new CoordPoint(p["TEXTURESIZEX"].AsCoordOrDefault(), p["TEXTURESIZEY"].AsCoordOrDefault());
             TextureRotation = p["TEXTUREROTATION"].AsDouble();
             ModelId = p["MODELID"].AsStringOrDefault();
             ModelChecksum = p["MODEL.CHECKSUM"].AsIntOrDefault();
@@ -101,35 +102,36 @@ namespace AltiumSharp.Records
             p.UseLongBooleans = true;
 
             p.Add("V7_LAYER", V7Layer);
-            p.Add("NAME", Name);
-            p.Add("KIND", Kind);
-            p.Add("SUBPOLYINDEX", SubPolyIndex);
-            p.Add("UNIONINDEX", UnionIndex);
-            p.Add("ARCRESOLUTION", ArcResolution);
-            p.Add("ISSHAPEBASED", IsShapeBased);
+            p.Add("NAME", Name, false);
+            p.Add("KIND", Kind, false);
+            p.Add("SUBPOLYINDEX", SubPolyIndex, false);
+            p.Add("UNIONINDEX", UnionIndex, false);
+            p.Add("ARCRESOLUTION", ArcResolution, false);
+            p.Add("ISSHAPEBASED", IsShapeBased, false);
             p.Add("STANDOFFHEIGHT", StandOffHeight);
             p.Add("OVERALLHEIGHT", OverallHeight);
             p.Add("BODYPROJECTION", BodyProjection);
             p.Add("ARCRESOLUTION", ArcResolution);
             p.Add("BODYCOLOR3D", BodyColor3D);
             p.Add("BODYOPACITY3D", BodyOpacity3D);
+            p.Add("BODYOVERRIDECOLOR", BodyOverrideColor);
             p.Add("IDENTIFIER", string.Join(",", Identifier?.Select(c => (int)c) ?? Enumerable.Empty<int>()));
             p.Add("TEXTURE", Texture);
-            p.Add("TEXTURECENTERX", TextureCenter.X);
-            p.Add("TEXTURECENTERY", TextureCenter.Y);
-            p.Add("TEXTURESIZEX", TextureSize.X);
-            p.Add("TEXTURESIZEY", TextureSize.Y);
-            p.Add("TEXTUREROTATION", TextureRotation);
+            p.Add("TEXTURECENTERX", TextureCenter.X, false);
+            p.Add("TEXTURECENTERY", TextureCenter.Y, false);
+            p.Add("TEXTURESIZEX", TextureSize.X, false);
+            p.Add("TEXTURESIZEY", TextureSize.Y, false);
+            p.Add("TEXTUREROTATION", TextureRotation, false);
             p.Add("MODELID", ModelId);
             p.Add("MODEL.CHECKSUM", ModelChecksum);
             p.Add("MODEL.EMBED", ModelEmbed);
-            p.Add("MODEL.2D.X", Model2DLocation.X);
-            p.Add("MODEL.2D.Y", Model2DLocation.Y);
-            p.Add("MODEL.2D.ROTATION", Model2DRotation);
-            p.Add("MODEL.3D.ROTX", Model3DRotX);
-            p.Add("MODEL.3D.ROTY", Model3DRotY);
-            p.Add("MODEL.3D.ROTZ", Model3DRotZ);
-            p.Add("MODEL.3D.DZ", Model3DDz);
+            p.Add("MODEL.2D.X", Model2DLocation.X, false);
+            p.Add("MODEL.2D.Y", Model2DLocation.Y, false);
+            p.Add("MODEL.2D.ROTATION", Model2DRotation, false);
+            p.Add("MODEL.3D.ROTX", Model3DRotX, false);
+            p.Add("MODEL.3D.ROTY", Model3DRotY, false);
+            p.Add("MODEL.3D.ROTZ", Model3DRotZ, false);
+            p.Add("MODEL.3D.DZ", Model3DDz, false);
             p.Add("MODEL.SNAPCOUNT", ModelSnapCount);
             p.Add("MODEL.MODELTYPE", ModelType);
         }

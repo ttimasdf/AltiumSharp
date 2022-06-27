@@ -109,7 +109,9 @@ namespace AltiumSharp.BasicTypes
         /// <summary>
         /// Gets the coordinate value of this parameter.
         /// </summary>
-        public Coord AsCoord() => Utils.StringToCoordUnit(_data, out _);
+        public Coord AsCoord() => Utils.StringToCoordUnit(_data ?? "", out _);
+
+        public Coord AsCoordOrDefault(string defaultValue = "0mil") => Utils.StringToCoordUnit(_data ?? defaultValue, out _);
 
         /// <summary>
         /// Gets the color value of this parameter.
