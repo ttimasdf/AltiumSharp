@@ -410,6 +410,7 @@ namespace AltiumSharp
             });
         }
 
+
         /// <summary>
         /// Get the name of the section storage key to be used to write a component "ref name".
         /// <para>
@@ -421,9 +422,19 @@ namespace AltiumSharp
         /// <returns>
         /// The generated name for a storage section key where write the data for the given <paramref name="refName"/>.
         /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison")]
         protected string GetSectionKeyFromComponentPattern(string refName)
         {
-            return refName?.Substring(0, refName.Length > 31 ? 31 : refName.Length).Replace('/', '_');
+            int maxSize = 23; // 31 - 8
+            if (refName?.Length > maxSize)
+            {
+                return refName.Substring(0, maxSize).Replace('/', '_') + refName?.GetHashCode().ToString("X8");
+            }
+            else
+            {
+                return refName.Replace('/', '_');
+            }
         }
 
         #region IDisposable Support
