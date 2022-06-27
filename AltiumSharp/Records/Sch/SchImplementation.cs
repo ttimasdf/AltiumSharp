@@ -15,7 +15,9 @@ namespace AltiumSharp.Records
         public string Description { get; set; }
         public string ModelName { get; set; }
         public string ModelType { get; set; }
-        public List<string> DataFile { get; internal set; }
+        public List<string> DataFileKinds { get; set; }
+        public List<string> DataFileEntities { get; set; }
+        public List<string> DataFileNames { get; set; }
         public bool IsCurrent { get; set; }
        
         public override void ImportFromParameters(ParameterCollection p)
@@ -26,10 +28,20 @@ namespace AltiumSharp.Records
             Description = p["DESCRIPTION"].AsStringOrDefault();
             ModelName = p["MODELNAME"].AsStringOrDefault();
             ModelType = p["MODELTYPE"].AsStringOrDefault();
-            DataFile = Enumerable.Range(1, p["DATAFILECOUNT"].AsIntOrDefault())
+            int length = p["DATAFILECOUNT"].AsIntOrDefault();
+            DataFileKinds = Enumerable.Range(0, length)
                 .Select(i => 
                     p[string.Format(CultureInfo.InvariantCulture, "MODELDATAFILEKIND{0}", i)].AsStringOrDefault())
                 .ToList();
+            DataFileEntities = Enumerable.Range(0, length)
+                .Select(i =>
+                    p[string.Format(CultureInfo.InvariantCulture, "MODELDATAFILEENTITY{0}", i)].AsStringOrDefault())
+                .ToList();
+            DataFileNames = Enumerable.Range(0, length)
+                .Select(i =>
+                    p[string.Format(CultureInfo.InvariantCulture, "MODELDATAFILE{0}", i)].AsStringOrDefault())
+                .ToList();
+
             IsCurrent = p["ISCURRENT"].AsBool();
         }
         
@@ -41,10 +53,13 @@ namespace AltiumSharp.Records
             p.Add("DESCRIPTION", Description);
             p.Add("MODELNAME", ModelName);
             p.Add("MODELTYPE", ModelType);
-            p.Add("DATAFILECOUNT", DataFile.Count);
-            for (var i = 0; i < DataFile.Count; i++)
+            p.Add("DATAFILECOUNT", DataFileKinds.Count);
+            for (var i = 0; i < DataFileKinds.Count; i++)
             {
-                p.Add(string.Format(CultureInfo.InvariantCulture, "MODELDATAFILEKIND{0}", i), DataFile[i]);
+                p.Add(string.Format(CultureInfo.InvariantCulture, "MODELDATAFILEKIND{0}", i), DataFileKinds[i]);
+                p.Add(string.Format(CultureInfo.InvariantCulture, "MODELDATAFILEENTITY{0}", i), DataFileEntities[i]);
+                if (DataFileNames.Count > i && DataFileNames[i].Length > 0)
+                    p.Add(string.Format(CultureInfo.InvariantCulture, "MODELDATAFILE{0}", i), DataFileNames[i]);
             }
             p.Add("ISCURRENT", IsCurrent);
         }
