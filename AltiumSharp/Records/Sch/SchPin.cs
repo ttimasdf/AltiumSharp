@@ -71,6 +71,8 @@ namespace AltiumSharp.Records
         public double PinPropagationDelay { get; set; }
         public string UniqueId { get; set; }
 
+        public byte[] TextData { get; set; }
+
         public override bool IsVisible => base.IsVisible && !PinConglomerate.HasFlag(PinConglomerateFlags.Hide);
 
         public bool IsNameVisible

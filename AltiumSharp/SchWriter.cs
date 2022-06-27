@@ -172,7 +172,7 @@ namespace AltiumSharp
             if (!IsAscii(pin.Name)) pinWideText.Add("NAME", pin.Name);
             if (!IsAscii(pin.Designator)) pinWideText.Add("DESIG", pin.Designator);
 
-            pinTextData = Array.Empty<byte>();
+            pinTextData = pin.TextData;
 
             pinSymbolLineWidth = new ParameterCollection
             {

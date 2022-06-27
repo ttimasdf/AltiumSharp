@@ -311,7 +311,7 @@ namespace AltiumSharp
 
             if (pinTextData != null)
             {
-
+                pin.TextData = pinTextData;
             }
 
             if (pinSymbolLineWidth != null)
