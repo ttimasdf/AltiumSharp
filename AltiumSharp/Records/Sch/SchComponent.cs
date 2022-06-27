@@ -43,7 +43,7 @@ namespace AltiumSharp.Records
 
         public SchDesignator Designator { get; private set; }
         public SchParameter Comment { get; private set; }
-        public SchImplementationList Implementations { get; private set; }
+        public SchImplementationList Implementations { get; set; }
 
         string IComponent.Name => LibReference;
         string IComponent.Description => ComponentDescription;
