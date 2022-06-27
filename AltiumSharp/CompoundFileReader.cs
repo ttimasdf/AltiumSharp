@@ -566,7 +566,13 @@ namespace AltiumSharp
         /// <returns>Read string interpreted with the specified encoding.</returns>
         internal static string ReadPascalString(BinaryReader reader, Encoding encoding = null)
         {
-            return ReadBlock(reader, size => ReadCString(reader, size, encoding));
+            return ReadBlock(reader, size =>
+            {
+                if (reader.PeekChar() == size - 1)
+                    return ReadPascalShortString(reader, encoding);
+                else
+                    return ReadCString(reader, size, encoding);
+            });
         }
 
         /// <summary>
